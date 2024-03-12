@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syncfusion TreeGrid Example</title>
+
+    <!-- Include Syncfusion scripts and styles -->
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/material.css" />
+    <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js"></script>
+
+    <style>
+        /* Add your custom styles here */
+        #treegrid {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="treegrid"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Syncfusion TreeGrid
+            var treegrid = new ej.treegrid.TreeGrid({
+                dataSource: [], // Data will be fetched dynamically
+                treeColumnIndex: 0, // Assuming 'name' as the tree column
+                columns: [
+                    { field: 'name', headerText: 'Name' },
+                ],
+                idMapping: 'id', // Unique identifier for each record
+                parentIdMapping: 'parentId', // Reference to the parent record
+                childMapping: 'children' // Reference to the child records
+            });
+
+            // Render the TreeGrid
+            treegrid.appendTo('#treegrid');
+
+            var paramsObj = {}
+            paramsObj.functionName = "generate";
+            paramsObj.module = "railMate"
+            paramsObj.location = localStorage.getItem("Location");
+            console.log(paramsObj)
+
+            let url = "http://127.0.0.1:5000?dbParams=" + JSON.stringify(paramsObj);
+            console.log(url);
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    // Process the data and prepare the structure for TreeGrid
+                    var treeData = [];
+
+                    // Add hospitals to the treeData
+                    treeData.push({
+                        id: 1,
+                        name: 'Hospitals',
+                        children: data.slice(0, 3).map((name, index) => ({
+                            id: 10 + index,
+                            name: name,
+                            parentId: 1
+                        }))
+                    });
+
+                    // Add restaurants to the treeData
+                    treeData.push({
+                        id: 2,
+                        name: 'Restaurants',
+                        children: data.slice(3, 6).map((name, index) => ({
+                            id: 20 + index,
+                            name: name,
+                            parentId: 2
+                        }))
+                    });
+
+                    // Add schools to the treeData
+                    treeData.push({
+                        id: 3,
+                        name: 'Schools',
+                        children: data.slice(6, 9).map((name, index) => ({
+                            id: 30 + index,
+                            name: name,
+                            parentId: 3
+                        }))
+                    });
+
+                    // Set the data to the TreeGrid
+                    treegrid.dataSource = treeData;
+                    treegrid.refresh();
+                })
+        });
+    </script>
+
+</body>
+
+</html>

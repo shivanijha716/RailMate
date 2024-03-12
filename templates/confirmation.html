@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>table {
+  width: 100%; /* Makes the table fill the available width */
+  border-collapse: collapse; /* Removes borders between table cells */
+}
+
+th, td {
+  padding: 10px; /* Adds padding to table cells */
+  text-align: left; /* Aligns text to the left */
+}
+
+th {
+  background-color: #f2f2f2; /* Light gray background for headers */
+}
+
+img {
+  width: 50px; /* Adjust width as needed for your images */
+  height: 50px; /* Adjust height as needed for your images */
+  margin-right: 10px; /* Adds margin to the right of the image */
+}
+
+button {
+  background-color: #4CAF50; /* Green background for buttons */
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners for buttons */
+}
+</style>
+  <title>Confirmation</title>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th>Item</th>
+        <th>Description</th>
+        <th>Confirm</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><img src="images/female.png" alt="Female"></td>
+            <td>Female</td>
+            <td><button type="button" id="femaleConfirm">Confirm</button></td>
+          </tr>
+          <tr>
+            <td><img src="images/male.png" alt="Male"></td>
+            <td>Male</td>
+            <td><button type="button" id="maleConfirm">Confirm</button></td>
+          </tr>
+      <tr>
+        <td><img src="images/emergency_hand.png" alt="Emergency Hand Signal"></td>
+        <td>Emergency Hand Signal</td>
+        <td><button type="button" id="emergencyConfirm">Confirm</button></td>
+      </tr>
+      <tr>
+        <td><img src="images/pwd.jpeg" alt="Wheelchair Icon"></td>
+        <td>Wheelchair Assistance</td>
+        <td><button type="button" id="wheelchairConfirm">Confirm</button></td>
+      </tr>
+      <tr>
+        <td><img src="images/children1.png" alt="Children"></td>
+        <td>Children</td>
+        <td><button type="button" id="ChildrenConfirm">Confirm</button></td>
+      </tr>
+
+ 
+    </tbody>
+  </table>
+  <div>
+    <button type="button" id="navigateNext">Go to Next Page</button>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const confirmedItems = [];
+  
+      // Function to add confirmed items
+      function confirmItem(item) {
+        confirmedItems.push(item);
+        // Update localStorage
+        localStorage.setItem('confirmedItems', JSON.stringify(confirmedItems));
+      }
+  
+      // Add event listeners to confirm buttons
+      document.getElementById('femaleConfirm').addEventListener('click', () => confirmItem('Female'));
+      document.getElementById('maleConfirm').addEventListener('click', () => confirmItem('Male'));
+      document.getElementById('emergencyConfirm').addEventListener('click', () => confirmItem('Emergency Hand Signal'));
+      document.getElementById('wheelchairConfirm').addEventListener('click', () => confirmItem('Wheelchair Assistance'));
+      document.getElementById('ChildrenConfirm').addEventListener('click', () => confirmItem('Children'));
+  
+      // Navigate to next page
+      document.getElementById('navigateNext').addEventListener('click', function() {
+        window.location.href = 'facilities.html'; // Replace 'nextPage.html' with your actual next page URL
+      });
+    });
+  </script>
+    
+</body>
+</html>
+
